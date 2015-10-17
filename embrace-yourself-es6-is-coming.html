@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/railscasts.min.css" />
+	<link rel="stylesheet" href="assets/fathom/theme.css" />
+
+	<title>Brace yourselves, ES6 is coming</title>
+</head>
+
+<body>
+	<div class="presentation">
+		<div class="slide welcome">
+			<h1>Brace yourselves, ES6 is coming</h1>
+			<footer>Abdelhakim Bachar - <a href="http://twitter.com/a_bachar">@a_bachar</a></footer>
+		</div>
+
+		<div class="slide">
+			<h1>What is ES6?</h1>
+		</div>
+		
+		<div class="slide header">
+			<h1>ES6 Features</h1>
+		</div>
+		<div class="slide">
+			<h1>Constants</h1>
+			<pre><code class="js">
+'use strict';
+
+const PI = 3.14;
+console.log(PI); // Will print 3.14
+
+PI = 10;
+// => TypeError: Assignment to constant variable.
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Scoping</h1>
+			<pre><code class="javascript">
+function scoping() {
+	var withVar = 10;
+	let withLet = 20;
+
+	if (true) {
+		var withVar = 11;
+		let withLet = 21;
+
+		console.log(withVar);  // 11
+		console.log(withLet);  // 21
+	}
+	console.log(withVar);  // 11
+	console.log(withLet);  // 20
+}
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Arrow function</h1>
+			<pre><code class="javascript">
+let numbers = [1, 4, 9];
+let doubles = numbers.map(n => num * 2);
+
+let roots = numbers.map(n => {
+return Math.sqrt(n);
+});
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Function parameters</h1>
+			<pre><code class="javascript">
+function defaultParameters(x, y = 7, z = 42) {
+	return x + y + z
+}
+defaultParameters(1) === 50
+
+function restParameter(x, y, ...a) {
+	return (x + y) * a.length
+}
+restParameter(1, 2, "hello", true, 7) === 9
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>String interpolation</h1>
+			<pre><code class="javascript">
+var x = 1;
+var y = 2;
+`${ x } + ${ y } = ${ x + y}`; // "1 + 2 = 3"
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Destructuring</h1>
+			<pre><code class="javascript">
+var list = [1, 2, 3];
+var [a, , b] = list;
+[b, a] = [a, b];
+
+var today = { d: 6, m: 2, y: 2013 };
+var { m: month, y: year } = today; // month = 2, year = 2013
+
+function paramDestructuring([name, val]) {
+	console.log(name, val)
+}
+paramDestructuring([ "bar", 42 ]);
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Modules</h1>
+			<pre><code class="javascript">
+// lib/math.js
+export const PI = 3.141593;
+export function sum (x, y) { return x + y }
+
+// app.js
+import * as math from "lib/math"; // math.PI
+import { sum, PI } from "lib/math"; // PI
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Classes</h1>
+			<pre><code class="javascript">
+class Shape {
+	constructor (x, y) {
+		this.move(x, y)
+	}
+	move (x, y) {
+		this.x = x
+		this.y = y
+	}
+}
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Classes</h1>
+			<pre><code class="javascript">
+class Circle extends Shape {
+	constructor(x, y, radius) {
+		super(x, y)
+		this.radius = radius
+	}
+
+	set radius(radius)  { this.radius = radius; }
+	get radius()        { return this.radius;   }
+}
+
+var circle = new Circle(0, 0 50);
+circle.radius === 50;
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>For of/in</h1>
+			<pre><code class="javascript">
+let arr = [3, 5, 7];
+arr.foo = "hello";
+
+for (let i in arr) {
+	console.log(i); // logs "0", "1", "2", "foo"
+}
+
+for (let i of arr) {
+	console.log(i); // logs "3", "5", "7"
+}
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Set</h1>
+			<pre><code class="javascript">
+let s = new Set()
+s.add("hello").add("goodbye").add("hello")
+s.size === 2
+s.has("hello") === true
+for (let val of s.values()) // insertion order
+	console.log(val)
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Map</h1>
+			<pre><code class="javascript">
+let m = new Map()
+m.set("hello", 42)
+m.set(s, 34)
+m.get(s) === 34
+m.size === 2
+for (let [ key, val ] of m.entries())
+	console.log(key + " = " + val)
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Built-In Methods</h1>
+		</div>
+		<div class="slide">
+			<h1>Promises</h1>
+		</div>
+		<div class="slide">
+			<h1>Tail calls</h1>
+		</div>
+
+		<div class="slide header">
+			<h1>Using ES6 Today</h1>
+		</div>
+		<div class="slide">
+			<h1>ES6 in the browser</h1>
+		</div>
+		<div class="slide">
+			<h1>ES6 in Node.js</h1>
+		</div>
+		<div class="slide">
+			<h1>Transpilation</h1>
+		</div>
+		<div class="slide header">
+			<h1>Questions ?</h1>
+		</div>
+	</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script src="assets/fathom/fathom.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	hljs.initHighlightingOnLoad();
+	$(".presentation").fathom();
+});
+</script>
+</body>
+
+</html>
