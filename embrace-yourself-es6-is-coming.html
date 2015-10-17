@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/railscasts.min.css" />
-	<link rel="stylesheet" href="assets/fathom/theme.css" />
+	<link rel="stylesheet" href="assets/keynote.js/keynote.theme.css" />
 
 	<title>Brace yourselves, ES6 is coming</title>
 </head>
@@ -216,11 +216,11 @@ for (let [ key, val ] of m.entries())
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
-<script src="assets/fathom/fathom.js" type="text/javascript"></script>
+<script src="assets/keynote.js/keynote.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	hljs.initHighlightingOnLoad();
-	$(".presentation").fathom();
+	var keynote = new KeynoteJS($(".presentation"));
 });
 </script>
 </body>
