@@ -3,7 +3,9 @@ body {
     margin-top: 5rem;
 }
 
-.my-word {
+em {
+    display: block;
+    font-style: normal;
     margin-bottom: 3rem;
 }
 
