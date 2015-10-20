@@ -48,7 +48,7 @@ KeynoteJS.prototype = {
     _setupEvents: function () {
         var self = this;
 
-        document.addEventListener('keydown', function() {
+        document.addEventListener('keydown', function(event) {
             var key = event.which;
 
             if (key === 39 || key === 32) {
