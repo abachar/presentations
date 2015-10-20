@@ -5,34 +5,31 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/monokai_sublime.min.css" />
 	<link rel="stylesheet" href="assets/keynote.js/keynote.css" />
+	<link rel="stylesheet" href="assets/keynote.js/plugins/highlight.js/monokai_sublime.min.css" />
 
-	<title>Brace yourselves, ES6 is coming</title>
+	<title>Brace yourselves, ES2015 is coming</title>
 </head>
 
 <body>
 	<div class="presentation">
 
 		<header class="slide welcome">
-			<h1>Brace yourselves<br />ES6 is coming</h1>
+			<h1>Brace yourselves<br />ES2015 is coming</h1>
 			<footer>Abdelhakim Bachar - <a href="http://twitter.com/a_bachar">@a_bachar</a></footer>
 		</header>
 
 		<div class="slide">
-			<h1>What is ES6 ?</h1>
-
-			<ul>
-				<li>ECMAScript is a scripting language specification standardized by <u>Ecma International</u></li>
-				<li>ES6 is the next-generation of javascript also known as ECMAScript 6 or ES Harmony</li>
-				<li>ES2015</li>
-				<li>Approved June 2015</li>
-			</ul>
+			<h1>What is ES2015 ?</h1>
+			<p>ECMAScript is a scripting language specification standardized by <cite>Ecma International</cite>.</p>
+			<br />
+			<p>ES2015 is a pseudonym for the latest version of the JavaScript programming language approved by ECMA International.</p>
+			<br />
+			<p>ES2015 was approved June 2015.</p>
 		</div>
 
 		<header class="slide">
-			<h1>ES6 Features</h1>
+			<h1>ES2015 Features</h1>
 		</header>
 		<div class="slide">
 			<h1>Constants</h1>
@@ -49,7 +46,7 @@ PI = 10;
 		</div>
 		<div class="slide">
 			<h1>Scoping</h1>
-			<p>The <strong>let</strong> statement declares a block scope local variable, optionally initializing it to a value.</p>
+			<p>The <mark>let</mark> statement declares a block scope local variable, optionally initializing it to a value.</p>
 			<pre><code class="javascript">
 function scoping() {
 	var withVar = 10; let withLet = 20;
@@ -67,7 +64,7 @@ function scoping() {
 		</div>
 		<div class="slide">
 			<h1>Arrow function</h1>
-			<p>Arrows are a function shorthand using the => syntax. They are syntactically similar to the related feature Java 8. They support both statement block bodies as well as expression bodies which return the value of the expression.</p>
+			<p>Arrows are a function shorthand using the <mark>=></mark> syntax. They are syntactically similar to the related feature Java 8. They support both statement block bodies as well as expression bodies which return the value of the expression.</p>
 			<pre><code class="javascript">
 var evens = [0, 2,  4,  6,  8,  10];
 var odds  = evens.map(v => v + 1);
@@ -143,7 +140,7 @@ console.log(`${ x } + ${ y } = ${ x + y }`); // "1 + 2 = 3"
 console.log(`string text line 1
 string text line 2`);
 			</code></pre>
-			<p>Template strings are enclosed by the back-tick (` `) character instead of double or single quotes.</p>
+			<p>Template strings are enclosed by the back-tick <mark>` `</mark> character instead of double or single quotes.</p>
 		</div>
 		<div class="slide">
 			<h1>Destructuring</h1>
@@ -164,7 +161,7 @@ printBirthYear(birthday);
 		</div>
 		<div class="slide">
 			<h1>Modules</h1>
-			<p>An ES6 module is a file containing JS code. Everything declared inside a module is local to the module, by default.</p>
+			<p>An ES2015 module is a file containing JS code. Everything declared inside a module is local to the module, by default.</p>
 			<p>You can use import and export in modules.</p>
 			<pre><code class="javascript">
 // lib/math.js
@@ -176,13 +173,13 @@ export function sum (x, y) { return x + y }
 import * as math from "lib/math"; // math.PI
 import { sum, PI } from "lib/math"; // PI
 			</code></pre>
-			<p>You can export any top-level function, class, var, let, or const.</p>
+			<p>You can export any top-level <mark>function</mark>, <mark>class</mark>, <mark>var</mark>, <mark>let</mark>, or <mark>const</mark>.</p>
 			<p>You can rename the import. <mark>import {sum as add} from "lib/math";</mark></p>
 		</div>
 		<div class="slide">
 			<h1>Classes</h1>
-			<p>JavaScript classes are syntactical sugar over JavaScript's existing prototype-based inheritance.</p>
-			<p>Classes are in fact functions.</p>
+			<p>JavaScript classes are syntactical sugar over JavaScript's existing prototype-based inheritance.<br />
+				Classes are in fact functions.</p>
 			<pre><code class="javascript">
 class Shape {
 	constructor(x, y) {
@@ -195,8 +192,8 @@ class Shape {
 	}
 }
 			</code></pre>
-			<p>Also: The static keyword defines a <u>static method</u> for a class.</p>
-			<p>There are no private or hidden properties in current ES6 specification.</p>
+			<p>Also: The <mark>static</mark> keyword defines a <cite>static method</cite> for a class.<br />
+				There are no private or hidden properties in current ES2015 specification.</p>
 		</div>
 		<div class="slide">
 			<h1>Classes</h1>
@@ -220,7 +217,7 @@ circle.radius === 50;
 		</div>
 		<div class="slide">
 			<h1>For of/in</h1>
-			<p>The for...of statement creates a loop Iterating over iterable objects.</p>
+			<p>The <mark>for...of</mark> statement creates a loop Iterating over iterable objects.</p>
 			<pre><code class="javascript">
 let arr = [3, 5, 7];
 arr.foo = "hello";
@@ -229,7 +226,7 @@ for (let i of arr) {
 	console.log(i); // logs "3", "5", "7"
 }
 			</code></pre>
-			<p>The for...in statement iterates over the enumerable properties of an object, in arbitrary order.</p>
+			<p>The <mark>for...in</mark> statement iterates over the enumerable properties of an object, in arbitrary order.</p>
 			<pre><code class="javascript">
 for (let i in arr) {
 	console.log(i); // logs "0", "1", "2", "foo"
@@ -307,7 +304,7 @@ console.log("abcde".repeat(3)); // abcdeabcdeabcde
 			</code></pre>
 		</div>
 		<div class="slide">
-			<h1>Built-In Methods (Arrow)</h1>
+			<h1>Built-In Methods (Array)</h1>
 			<p>Some handy new Array methods.</p>
 			<pre><code class="javascript">
 // Create a new Array instance from an array-like or iterable object.
@@ -337,7 +334,7 @@ var p = timeout(1000)
 .then(() => console.log('Resolved'), () => console.warn('Rejected'))
 .catch(err => console.error(err))
 			</code></pre>
-			<p>There is also a <code>catch()</code> method that behaves the same as <code>then()</code> when only a rejection handler is passed</p>
+			<p>There is also a <mark>catch()</mark> method that behaves the same as <mark>then()</mark> when only a rejection handler is passed.</p>
 		</div>
 		<div class="slide">
 			<h1>Tail Call Optimization</h1>
@@ -360,27 +357,65 @@ function doSomething() {
 		</div>
 
 		<header class="slide">
-			<h1>Using ES6 Today</h1>
+			<h1>Using ES2015 Today</h1>
 		</header>
 		<div class="slide">
-			<h1>ES6 in the browser</h1>
+			<h1>ES2015 in the browser</h1>
+			<p>The good news is that native ES2015 support in browsers such as Chrome, Firefox, and Opera is getting better and better every week.</p>
+			<p>While modern browsers support various ES2015 features, ES2015 as a whole isn’t quite ready for “prime time” if you need all of the key language features available at once.</p>
+			<p>Check <a href="http://kangax.github.io/compat-table/ES2015">http://kangax.github.io/compat-table/ES2015</a> for ECMAScript 6 compatibility table.</p>
 		</div>
 		<div class="slide">
-			<h1>ES6 in Node.js</h1>
+			<h1>ES2015 in Node.js</h1>
+			<p>Node.js is built against modern versions of V8.</p>
+			<p>All ES2015 features are split into three groups for <cite>shipping</cite>, <cite>staged</cite>, and <cite>in progress</cite> features :</p>
+			<ul>
+				<li><cite>Shipping</cite> features, which V8 considers stable, are turned on by default.</li>
+				<li><cite>Staged</cite> features, which are almost-completed features that are not considered stable by the V8 team, require a runtime flag: --es_staging (or --harmony).</li>
+				<li><cite>In progress</cite> features can be activated individually by their respective harmony flag (e.g. --harmony_destructuring).
+					<pre><code class="bash">node --v8-options | grep "in progress"</code></pre></li>
+			</ul>
 		</div>
 		<div class="slide">
 			<h1>Transpilation</h1>
+			<p><cite>Transpiler</cite> is a type of compiler that takes the source code of a program written in one programming language as its input and produces
+				the equivalent source code in another programming language.</p>
+			<p>Two of the most popular transpilers are:</p>
+			<ul>
+				<li><cite>Traceur</cite> : Open source transpiler started by Google that maps ES2015 to ES5.</li>
+				<li><cite>Babel</cite> : Open source transpiler that maps ES2015 directly to ES5.</li>
+			</ul>
+		</div>
+		<div class="slide">
+			<h1>Transpilation (Babel)</h1>
+			<p>How to use Babel with gulp ?</p>
+			<pre><code class="bash">
+npm install --save-dev gulp-babel
+			</code></pre>
+			<pre><code class="javascript">
+var gulp = require("gulp");
+var babel = require("gulp-babel");
+var concat = require("gulp-concat");
+
+gulp.task("compile-js", function () {
+	return gulp.src("src/**/*.js")
+		.pipe(babel())
+		.pipe(concat("all.js"))
+		.pipe(gulp.dest("dist"));
+});
+			</code></pre>
+			<p>Also: With gulp 3.9, we are now able to use ES2015 in our gulpfile (thanks to Babel)</p>
 		</div>
 		<header class="slide">
 			<h1>Questions ?</h1>
 		</header>
 	</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+    <script src="assets/keynote.js/plugins/highlight.js/highlight.min.js"></script>
     <script src="assets/keynote.js/keynote.js" type="text/javascript"></script>
     <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function () {
-			var keynote = new KeynoteJS(".presentation");
+			new KeynoteJS(".presentation");
 
 			hljs.configure({tabReplace: '    '});
 
