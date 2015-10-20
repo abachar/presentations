@@ -73,23 +73,26 @@ var evens = [0, 2,  4,  6,  8,  10];
 var odds  = evens.map(v => v + 1);
 var nums  = evens.map((v, i) => v + i);
 var pairs = evens.map(v => ({even: v, odd: v + 1}));
+var fives = new Array();
 
 nums.forEach(v => {
-  if (v % 5 === 0) fives.push(v);
+	if (v % 5 === 0) {
+		fives.push(v);
+	}
 });
 			</code></pre>
 		</div>
 		<div class="slide">
 			<h1>Arrow function (Lexical this)</h1>
-			<p>Every new function defined its own this value</p>
+			<p>Every new function defined its own this value.</p>
 			<pre><code class="javascript">
 function Person() {
-  var self = this;
-  self.age = 0;
+	var self = this;
+	self.age = 0;
 
-  setInterval(function growUp() {
-    self.age++;
-  }, 1000);
+	setInterval(function growUp() {
+		self.age++;
+	}, 1000);
 }
 			</code></pre>
 		</div>
@@ -97,12 +100,12 @@ function Person() {
 			<h1>Arrow function (Lexical this)</h1>
 			<p>Arrows share the same lexical this as their surrounding code.</p>
 			<pre><code class="javascript">
-function Person(){
-  this.age = 0;
+function Person() {
+	this.age = 0;
 
-  setInterval(() => {
-    this.age++;
-  }, 1000);
+	setInterval(() => {
+		this.age++;
+	}, 1000);
 }
 			</code></pre>
 		</div>
@@ -111,9 +114,10 @@ function Person(){
 			<p>Default function parameters allow formal parameters to be initialized with default values if no value or undefined is passed.</p>
 			<pre><code class="javascript">
 function defaultParameters(x, y = 7, z = 42) {
-	return x + y + z
+	return x + y + z;
 }
-defaultParameters(1) === 50
+
+console.log(defaultParameters(1) === 50); // true
 			</code></pre>
 		</div>
 		<div class="slide">
@@ -121,9 +125,10 @@ defaultParameters(1) === 50
 			<p>The rest parameter syntax allows to represent an indefinite number of arguments as an array.</p>
 			<pre><code class="javascript">
 function restParameter(x, y, ...a) {
-	return (x + y) * a.length
+	return (x + y) * a.length;
 }
-restParameter(1, 2, "hello", true, 7) === 9
+
+console.log(restParameter(1, 2, "hello", true, 7) === 9); // true
 			</code></pre>
 		</div>
 		<div class="slide">
@@ -138,6 +143,7 @@ console.log(`${ x } + ${ y } = ${ x + y }`); // "1 + 2 = 3"
 console.log(`string text line 1
 string text line 2`);
 			</code></pre>
+			<p>Template strings are enclosed by the back-tick (` `) character instead of double or single quotes.</p>
 		</div>
 		<div class="slide">
 			<h1>Destructuring</h1>
@@ -147,10 +153,13 @@ var list = [1, 2, 3];
 var [a, , b] = list;
 [b, a] = [a, b];
 
-var today = { d: 6, m: 2, y: 2013 };
-var { m: month, y: year } = today; // month = 2, year = 2013
+var birthday = { d: 26, m: 9, y: 1983 };
+var { m: month, y: year } = birthday; // month = 9, year = 1983
 
-function paramDestructuring([a, , b]) { /* ... */ }
+function printBirthYear({y: year}) {
+	console.log(`You were born in ${ year }`);
+}
+printBirthYear(birthday);
 			</code></pre>
 		</div>
 		<div class="slide">
@@ -159,6 +168,7 @@ function paramDestructuring([a, , b]) { /* ... */ }
 			<p>You can use import and export in modules.</p>
 			<pre><code class="javascript">
 // lib/math.js
+const HALF = 0.5;
 export const PI = 3.141593;
 export function sum (x, y) { return x + y }
 
@@ -166,31 +176,40 @@ export function sum (x, y) { return x + y }
 import * as math from "lib/math"; // math.PI
 import { sum, PI } from "lib/math"; // PI
 			</code></pre>
-			<i>You can export any top-level function, class, var, let, or const.</i>
+			<p>You can export any top-level function, class, var, let, or const.</p>
+			<p>You can rename the import. <mark>import {sum as add} from "lib/math";</mark></p>
 		</div>
 		<div class="slide">
 			<h1>Classes</h1>
+			<p>JavaScript classes are syntactical sugar over JavaScript's existing prototype-based inheritance.</p>
+			<p>Classes are in fact functions.</p>
 			<pre><code class="javascript">
 class Shape {
-	constructor (x, y) {
-		this.move(x, y)
+	constructor(x, y) {
+		this.move(x, y);
 	}
-	move (x, y) {
-		this.x = x
-		this.y = y
+
+	move(x, y) {
+		this.x = x;
+		this.y = y;
 	}
 }
 			</code></pre>
+			<p>Also: The static keyword defines a <u>static method</u> for a class.</p>
+			<p>There are no private or hidden properties in current ES6 specification.</p>
 		</div>
 		<div class="slide">
 			<h1>Classes</h1>
+			<p>The extends keyword is used in class declarations to create a class with a child of another class.</p>
+			<p>The <mark>super</mark> keyword is used to call functions on an object's parent.</p>
 			<pre><code class="javascript">
 class Circle extends Shape {
 	constructor(x, y, radius) {
-		super(x, y)
-		this.radius = radius
+		super(x, y);
+		this.radius = radius;
 	}
 
+	// getter/setter syntax
 	set radius(radius)  { this.radius = radius; }
 	get radius()        { return this.radius;   }
 }
@@ -201,77 +220,109 @@ circle.radius === 50;
 		</div>
 		<div class="slide">
 			<h1>For of/in</h1>
+			<p>The for...of statement creates a loop Iterating over iterable objects.</p>
 			<pre><code class="javascript">
 let arr = [3, 5, 7];
 arr.foo = "hello";
-
-for (let i in arr) {
-	console.log(i); // logs "0", "1", "2", "foo"
-}
 
 for (let i of arr) {
 	console.log(i); // logs "3", "5", "7"
 }
 			</code></pre>
+			<p>The for...in statement iterates over the enumerable properties of an object, in arbitrary order.</p>
+			<pre><code class="javascript">
+for (let i in arr) {
+	console.log(i); // logs "0", "1", "2", "foo"
+}
+			</code></pre>
 		</div>
 		<div class="slide">
 			<h1>Set</h1>
+			<p>The Set object lets you store unique values of any type, whether primitive values or object references.</p>
 			<pre><code class="javascript">
-let s = new Set()
-s.add("hello").add("goodbye").add("hello")
-s.size === 2
-s.has("hello") === true
+let s = new Set();
+
+s.add("hello").add("goodbye").add("hello");
+console.log(s.size); // 2
+console.log(s.has("hello")); // true
+
 for (let val of s.values()) // insertion order
-	console.log(val)
+	console.log(val);
 			</code></pre>
+			<p>Also there is WeakSet, the main differences to the Set object are:</p>
+			<ul>
+				<li>WeakSets are collections of objects only</li>
+				<li>References to objects in the collection are held weakly.</li>
+			</ul>
 		</div>
 		<div class="slide">
 			<h1>Map</h1>
+			<p>The Map object is a simple key/value map. Any value (both objects and primitive values) may be used as either a key or a value.</p>
 			<pre><code class="javascript">
-let m = new Map()
-m.set("hello", 42)
-m.set(s, 34)
-m.get(s) === 34
-m.size === 2
-for (let [ key, val ] of m.entries())
-	console.log(key + " = " + val)
+let m = new Map();
+let k = {};
+
+m.set("hello", 42);
+m.set(k, 34);
+console.log(m.size); // 2
+console.log(m.get(k)); // 34
+
+for (let [key, val] of m.entries()) {
+	console.log(key + " = " + val);
+}
+			</code></pre>
+			<p>Also there is WeakMap, the key in a WeakMap is held weakly.</p>
+		</div>
+		<div class="slide">
+			<h1>Built-In Methods (Object)</h1>
+			<p>The <mark>Object.is()</mark> method determines whether two values are the same value.</p>
+			<pre><code class="javascript">
+Object.is('foo', 'foo');     // true
+Object.is(window, window);   // true
+Object.is('foo', 'bar');     // false
+Object.is([], []);           // false
+			</code></pre>
+			<p>The <mark>Object.assign()</mark> method is used to copy the values of all enumerable own properties from one or more source objects to a target object.</p>
+			<pre><code class="javascript">
+var obj = {a: 1};
+var copy = Object.assign({}, obj);
+console.log(copy); // { a: 1 }
 			</code></pre>
 		</div>
 		<div class="slide">
-			<h1>Built-In Methods</h1>
+			<h1>Built-In Methods (String)</h1>
+			<p>Some handy new String methods.</p>
 			<pre><code class="javascript">
-// Object
-Object.is()
-Object.assign(dst, src1, ...);
+// Check if string starts with "ab"
+console.log("abcde".startsWith("ab")); // true
 
-// Arrow
-Array.from(document.querySelectorAll('*')) // Returns a real Array
-Array.of(1, 2, 3) // Similar to new Array(...), but without special one-arg behavior
-[0, 0, 0].fill(7, 1) // [0,7,7]
-[1, 2, 3].find(x => x == 3) // 3
-[1, 2, 3].findIndex(x => x == 2) // 1
-[1, 2, 3, 4, 5].copyWithin(3, 0) // [1, 2, 3, 1, 2]
-["a", "b", "c"].entries() // iterator [0, "a"], [1,"b"], [2,"c"]
-["a", "b", "c"].keys() // iterator 0, 1, 2
-["a", "b", "c"].values() // iterator "a", "b", "c"
+// Check if string ends with "de"
+console.log("abcde".endsWith("de")); // true
 
-// String
-"abcde".startsWith("ab")
-"abcde".endsWith("de")
-"abcde".includes("cd")
-"abcde".repeat(3)
+// Check if string contain "cd"
+console.log("abcde".includes("cd")); // true
 
-// Math
-Math.acosh(3)
-Math.hypot(3, 4)
-Math.trunc(42.7)
-Math.sign(7)
-Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2)
+// Repeats "abcde" 3 times
+console.log("abcde".repeat(3)); // abcdeabcdeabcde
+			</code></pre>
+		</div>
+		<div class="slide">
+			<h1>Built-In Methods (Arrow)</h1>
+			<p>Some handy new Array methods.</p>
+			<pre><code class="javascript">
+// Create a new Array instance from an array-like or iterable object.
+Array.from(document.querySelectorAll('*'));
 
-// Number
-Number.EPSILON
-Number.isInteger(Infinity) // false
-Number.isNaN("NaN") // false
+// Create a new Array instance with a variable number of arguments
+Array.of(1, 2, 3); [1, 2, 3]
+
+// Fill all the elements of an array from a start index to an end index with a static value.
+[0, 0, 0].fill(7, 1); // [0,7,7]
+
+// Return a value/index in the array, if an element in the array satisfies the provided 
+// testing function. Otherwise undefined/-1 is returned.
+[1, 2, 3].find(x => x == 3); // 3
+[1, 2, 3].findIndex(x => x == 2); // 1
 			</code></pre>
 		</div>
 		<div class="slide">
