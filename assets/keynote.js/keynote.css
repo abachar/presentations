@@ -25,29 +25,36 @@ html, body {
   margin: 0;
   padding: 0; }
 
-.presentation {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+body {
+  position: relatvie;
   background: #684687 url("bkgnd.png") no-repeat center center fixed;
-  background-size: cover; }
+  background-size: cover;
+  overflow: hidden; }
+
+.presentation {
+  position: absolute;
+  width: 1024px;
+  height: 768px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.presentation.transition .slide {
+  transition: all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
 
 .slide {
   position: absolute;
-  transition: all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   padding: 1rem 1.5rem;
-  margin: 5vh 5vw;
-  height: 90vh;
-  width: 90vw;
-  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
   box-sizing: border-box; }
 
 .slide.past {
   opacity: 0;
-  left: -70vw; }
+  left: -70%; }
 
 .slide.present {
   opacity: 1;
@@ -55,7 +62,7 @@ html, body {
 
 .slide.future {
   opacity: 0;
-  left: 70vw; }
+  left: 70%; }
 
 .slide cite {
   text-decoration: underline; }

@@ -1,92 +1,128 @@
-// Constants
-var FUTURE_CLASS  = 'future';
-var PAST_CLASS    = 'past';
-var PRESENT_CLASS = 'present';
+window.KeynoteJS = (function() {
+    var config = {
+            width: 1024,
+            height: 768,
+            futureClass: 'future',
+            presentClass: 'present',
+            pastClass: 'past'
+        },
+        container,
+        slides,
+        activeSlide = 0;
 
-var KeynoteJS = function (container) {
-    this.container = document.querySelector(container);
-    this.slides    = this.container.querySelectorAll('.slide');
+    function initialize(selector) {
+        container = document.querySelector(selector);
+        slides = container.querySelectorAll('.slide');
 
-    return this
-        ._readUrl()
-        ._setClasses()
-        ._setupEvents();
-};
+        activeSlide = getSlideNumberFromHash();
+        setClasses();
+        scale();
+        setupEvents();
 
-KeynoteJS.prototype = {
-    _readUrl: function () {
-        var hash = window.location.hash;
-        if (/^#\/\d+$/.test(hash)) {
-            var index = parseInt(hash.replace(/#|\//gi, ''));
-            if ((index >= 0) && (index < this.slides.length)) {
-                this.activeSlide = index;
-            }
-        } else {
-            window.location.hash = '#/';
-            this.activeSlide = 0;
-        }
+        setTimeout(function() {
+            container.classList.add('transition');
+        }, 1);
+    }
 
-        return this;
-    },
-
-    _setClasses: function () {
-        var activeSlide = this.activeSlide;
-
-        [].forEach.call(this.slides, function(elem, index) {
+    function setClasses() {
+        [].forEach.call(slides, function(elem, index) {
             if (index < activeSlide) {
-                elem.classList.add(PAST_CLASS);
+                elem.classList.add(config.pastClass);
             } else if (index > activeSlide) {
-                elem.classList.add(FUTURE_CLASS);
+                elem.classList.add(config.futureClass);
             } else {
-                elem.classList.add(PRESENT_CLASS);
+                elem.classList.add(config.presentClass);
             }
         });
+    }
 
-        return this;
-    },
+    function setupEvents() {
+        document.addEventListener('keydown', onDocumentKeyDown, false);
+        window.addEventListener('hashchange', onWindowHashChange, false);
+        window.addEventListener('resize', onWindowResize, false);
+    }
 
-    _setupEvents: function () {
-        var self = this;
+    function onDocumentKeyDown(event) {
+        var key = event.which;
 
-        document.addEventListener('keydown', function(event) {
-            var key = event.which;
+        switch (event.keyCode) {
+            case 32: case 39:
+                nextSlide();
+                break;
 
-            if (key === 39 || key === 32) {
-                event.preventDefault();
-                self.nextSlide();
-            } else if (key === 37) {
-                event.preventDefault();
-                self.prevSlide();
-            }
-        });
+            case 37:
+                prevSlide();
+                break;
+        }
+    }
 
-        return this;
-    },
+    function onWindowResize() {
+        scale();
+    }
 
-    nextSlide: function () {
-        this.scrollToSlide(this.activeSlide + 1);
-    },
+    function onWindowHashChange() {
+        var index = getSlideNumberFromHash();
+        slideToSlide(index);
+    }
 
-    prevSlide: function () {
-        this.scrollToSlide(this.activeSlide - 1);
-    },
+    function getSlideNumberFromHash() {
+        var hash = window.location.hash;
+        return (/^#\/\d+$/.test(hash)) ?
+            parseInt(hash.replace(/#\//gi, '')) : 0;
+    }
 
-    scrollToSlide: function (index) {
-        if ((index >= 0) && (index < this.slides.length) && (index !== this.activeSlide)) {
+    function scale() {
+        var scale = Math.min((window.innerWidth * 0.9) / config.width, (window.innerHeight * 0.9) / config.height);
+        container.style.transform = 'translate(-50%, -50%) scale('+ scale +')';
+    }
 
-            var next   = this.slides[index],
-                active = this.slides[this.activeSlide];
+    function nextSlide() {
+        switchToSlide(activeSlide + 1);
+    }
 
-            active.classList.remove(PRESENT_CLASS);
-            active.classList.add(index > this.activeSlide ? PAST_CLASS : FUTURE_CLASS);
+    function prevSlide() {
+        switchToSlide(activeSlide - 1);
+    }
 
-            next.classList.remove(PAST_CLASS, FUTURE_CLASS);
-            next.classList.add(PRESENT_CLASS);
+    function switchToSlide(index) {
+        if ((index >= 0) && (index < slides.length) && (index !== activeSlide)) {
 
-            this.activeSlide = index;
+            var next   = slides[index],
+                active = slides[activeSlide];
+
+            active.classList.remove(config.presentClass);
+            active.classList.add(index > activeSlide ? config.pastClass : config.futureClass);
+
+            next.classList.remove(config.pastClass, config.futureClass);
+            next.classList.add(config.presentClass);
+
+            activeSlide = index;
             window.location.hash = '/' + ((index > 0) ? index : '');
         }
     }
-};
 
-window.KeynoteJS = KeynoteJS;
+    function slideToSlide(slideIndex) {
+        if (slideIndex < activeSlide) {
+            for (var i = activeSlide; i >= slideIndex; i--) {
+                slides[i].classList.remove(config.presentClass, config.pastClass);
+                slides[i].classList.add((i !== slideIndex) ? config.futureClass : config.presentClass);
+            }
+        } else if (slideIndex > activeSlide) {
+            for (var i = activeSlide; i <= slideIndex; i++) {
+                slides[i].classList.remove(config.presentClass, config.futureClass);
+                slides[i].classList.add((i !== slideIndex) ? config.pastClass : config.presentClass);
+            }
+        }
+
+        activeSlide = slideIndex;
+        window.location.hash = '/' + ((activeSlide > 0) ? activeSlide : '');
+    }
+
+    var KeynoteJS = {
+        initialize: initialize,
+        nextSlide: nextSlide,
+        prevSlide: prevSlide
+    };
+
+    return KeynoteJS;
+}());

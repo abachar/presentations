@@ -170,11 +170,11 @@ export const PI = 3.141593;
 export function sum (x, y) { return x + y }
 
 // app.js
-import * as math from "lib/math"; // math.PI
-import { sum, PI } from "lib/math"; // PI
+import * as math from "lib/math"; // math.sum
+import { sum, PI } from "lib/math"; // sum
+import { sum as add } from "lib/math"; // add
 			</code></pre>
 			<p>You can export any top-level <mark>function</mark>, <mark>class</mark>, <mark>var</mark>, <mark>let</mark>, or <mark>const</mark>.</p>
-			<p>You can rename the import. <mark>import {sum as add} from "lib/math";</mark></p>
 		</div>
 		<div class="slide">
 			<h1>Classes</h1>
@@ -415,7 +415,7 @@ gulp.task("compile-js", function () {
     <script src="assets/keynote.js/keynote.js" type="text/javascript"></script>
     <script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function () {
-			new KeynoteJS(".presentation");
+			KeynoteJS.initialize(".presentation");
 
 			hljs.configure({tabReplace: '    '});
 
